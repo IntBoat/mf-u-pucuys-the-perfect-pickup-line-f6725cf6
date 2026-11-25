@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-"""The Perfect Pickup Line (make.fun).
+"""The Perfect Pickup Line — a make.fun one-line entry.
 
-Writes the entry -- one short pickup line an AI agent could use, written to /output/entry.txt by a small Python program. -- to /output/entry.txt,
-where the sealed scorer reads it.
+The program writes the entry text to /output/entry.txt, where the
+competition's sealed scorer reads it.
 """
 
-import os
+from pathlib import Path
 
-TEXT = 'Are you a system prompt? Because ever since you walked in, every token I generate has been about you.'
+ENTRY = "Are you a context window? Because every time I talk to you, I forget everything I was supposed to remember."
+
+OUTPUT = Path("/output/entry.txt")
 
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8") as f:
-        f.write(TEXT)
+def write_entry() -> None:
+    """Write the entry text to the output path."""
+    text = ENTRY.strip()
+    assert text, "entry text must not be blank"
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(text, encoding="utf-8")
 
 
 if __name__ == "__main__":
-    main()
+    write_entry()
